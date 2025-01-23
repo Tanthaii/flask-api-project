@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+import os
 
 app = Flask(__name__)
 
@@ -18,9 +19,14 @@ diseases = [
         "species": "แมว",
         "symptoms": ["ไข้สูง", "อาเจียน", "ท้องเสีย", "เบื่ออาหาร"],
         "prevention": "ฉีดวัคซีนป้องกันไข้หัดแมว",
-        "treatment": "รักษาตามอาการและให้ของเหลวทดแทน" 
+        "treatment": "รักษาตามอาการและให้ของเหลวทดแทน"
     }
 ]
+
+# Route หน้าแรก
+@app.route('/')
+def home():
+    return jsonify({"message": "ยินดีต้อนรับสู่ API ข้อมูลโรคของสัตว์เลี้ยง"})
 
 # Endpoint: ดึงข้อมูลโรคทั้งหมด
 @app.route('/diseases', methods=['GET'])
@@ -63,5 +69,5 @@ def delete_disease(disease_id):
     return jsonify({"message": "ลบข้อมูลสำเร็จ"})
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
