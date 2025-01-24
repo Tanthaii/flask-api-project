@@ -1,7 +1,11 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # นำเข้า Flask-CORS
 import os
 
 app = Flask(__name__)
+
+# เปิดใช้งาน CORS สำหรับทุกเส้นทาง (อนุญาตทุกโดเมนให้เข้าถึง API)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # ตัวอย่างข้อมูลโรคของน้องหมาและน้องแมว
 diseases = [
